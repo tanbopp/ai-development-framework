@@ -25,6 +25,8 @@ npx skills add nutlope/hallmark
 npx -y unslop-mcp@latest init
 ```
 
+`/init-project` handles the `.gitkeep` placeholders automatically. If you prefer to run the clone commands manually, run them after deleting the corresponding `.gitkeep` file.
+
 **The vendor directories are intentionally empty in this template.** `.agents/vendor/*` contains only `.gitkeep` files, because the vendor repos keep their own licenses and are fetched at install time. You must run `/init-project` before `/full-cycle`. Without it, Ponytail and design-taste-frontend are missing, and Hallmark and unslop are not installed, so the design audits will not function. Phases 1 to 5 can still produce documents, but the Phase 7 audit cannot run its tools.
 
 Hallmark can also be cloned manually into `.agents/vendor/hallmark/`. `unslop init` writes agent config files (for example `.mcp.json`) and merges into existing ones, so review the diff before committing.
@@ -84,6 +86,8 @@ Plan, Stack, Design, Spec, Task, Implement, Audit, Deliver, with a gate at every
 | Task, Implement | `TASKS.md`, code | none |
 | Audit | audit report | hard floor must pass |
 | Deliver | build and deployment report | user review |
+
+Typing 'continue', 'proceed', or 'lanjut' counts as approval of the current gate. To reject a spec and request changes, say so explicitly.
 
 Audit has two tiers. The hard floor (WCAG AA contrast, focus state, `prefers-reduced-motion`, mobile overflow or truncated text) always fails the audit. Soft preferences may be overridden with a written brand justification in `DESIGN.md`.
 

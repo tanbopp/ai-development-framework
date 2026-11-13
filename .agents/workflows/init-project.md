@@ -6,16 +6,35 @@ Prepares a fresh workspace. Safe to re-run: skip anything already present.
 
 ## Process
 1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, and `.agents/workflows/` exist and every rule has a valid `trigger` frontmatter.
-2. Clone the vendor repos (skip if the target directory already contains files besides `.gitkeep`):
+2. Remove the placeholder `.gitkeep` files and clone the vendor repos (skip if already cloned, and continue on individual failure):
    ```bash
-   git clone --depth 1 https://github.com/DietrichGebert/ponytail.git .agents/vendor/ponytail
-   git clone --depth 1 https://github.com/changemaner/design-taste-frontend.git .agents/vendor/design-taste-frontend
+   # Remove placeholder .gitkeep files (safe to re-run)
+   rm -f .agents/vendor/ponytail/.gitkeep
+   rm -f .agents/vendor/design-taste-frontend/.gitkeep
+   rm -f .agents/vendor/hallmark/.gitkeep
+   rm -f .agents/vendor/unslop/.gitkeep
+
+   # Clone vendor repos (skip if already cloned)
+   if [ ! -d .agents/vendor/ponytail/.git ]; then
+     git clone --depth 1 https://github.com/DietrichGebert/ponytail.git .agents/vendor/ponytail || echo "WARN: ponytail clone failed"
+   fi
+   if [ ! -d .agents/vendor/design-taste-frontend/.git ]; then
+     git clone --depth 1 https://github.com/changemaner/design-taste-frontend.git .agents/vendor/design-taste-frontend || echo "WARN: design-taste-frontend clone failed"
+   fi
    ```
+   The `.gitkeep` files are placeholders committed to the template. They are removed before cloning because `git clone` refuses non-empty target directories. Removing them is safe because they only exist in the fresh template state.
 3. Install Hallmark (auditor and skill). Preferred:
    ```bash
    npx skills add nutlope/hallmark
    ```
-   Alternative: `git clone --depth 1 https://github.com/Nutlope/hallmark.git .agents/vendor/hallmark`. Browser checks (`sloplint --render`) also need `npm i -g puppeteer-core` and Chrome; static checks run without them.
+   Alternative (ensure `.agents/vendor/hallmark/.gitkeep` is removed first; Step 2 already removes it, and skip if already cloned):
+   ```bash
+   rm -f .agents/vendor/hallmark/.gitkeep
+   if [ ! -d .agents/vendor/hallmark/.git ]; then
+     git clone --depth 1 https://github.com/Nutlope/hallmark.git .agents/vendor/hallmark || echo "WARN: hallmark clone failed"
+   fi
+   ```
+   Browser checks (`sloplint --render`) also need `npm i -g puppeteer-core` and Chrome; static checks run without them.
 4. Install unslop (auditor and MCP server):
    ```bash
    npx -y unslop-mcp@latest init
