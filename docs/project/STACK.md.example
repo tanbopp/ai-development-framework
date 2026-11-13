@@ -1,0 +1,50 @@
+# STACK: UMKM Inventory App (example)
+
+> Example only. Produced by `stack-advisor` from the example PRD.
+
+## Non-Functional Requirements (from PRD)
+Offline-capable, phone-first, 1 developer, budget under USD 20 per month, no realtime.
+
+## Option A: TypeScript PWA with local-first storage
+- **Language/framework:** TypeScript (strict), a component framework, installable PWA.
+- **Storage:** IndexedDB on device, small hosted API for sync.
+- **Hosting:** Static host plus one small serverless API.
+- **Testing:** Unit tests for movement logic, E2E for record-sale flow.
+- **Wins:** True offline, one language, cheap hosting.
+- **Sacrifices:** Sync conflict handling is on us. Weaker device APIs than native.
+
+## Option B: Kotlin native Android app with a Go backend
+- **Language/framework:** Kotlin, Go (`go vet` on).
+- **Storage:** SQLite on device, PostgreSQL on the server.
+- **Hosting:** One small VPS.
+- **Testing:** JUnit, Go tests, instrumented UI tests.
+- **Wins:** Best offline and device performance.
+- **Sacrifices:** Two languages, Android only, higher cost for one developer.
+
+## Option C: Server-rendered web app
+- **Language/framework:** TypeScript (strict), server-rendered pages.
+- **Storage:** PostgreSQL.
+- **Hosting:** Managed platform.
+- **Testing:** Unit plus E2E.
+- **Wins:** Simplest to build and deploy.
+- **Sacrifices:** Fails the offline requirement without extra work.
+
+## Recommendation
+**Option A.** It satisfies REQ-001 (reliable stock movements recorded on a phone, including offline) and the offline and budget non-functional requirements. Option C is rejected because it cannot meet offline use. Option B is rejected because one developer cannot maintain two languages within the budget.
+
+## Rationale
+Movements are append-only, which makes offline merge predictable: replay events by timestamp and device ID.
+
+## What We Deliberately Do Not Use
+- A realtime socket layer: the PRD says realtime is not required.
+- An ORM with code generation: one extra dependency for a small schema.
+- A global state library: component state is enough for this app size.
+
+## Dependencies (each needs approval)
+| Dependency | Rationale |
+| --- | --- |
+| IndexedDB wrapper | Typed access to local storage |
+| Test runner | Required by stack principles |
+
+## Open Questions
+- Which sync conflict rule does the owner prefer: last write wins or review?

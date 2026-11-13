@@ -1,0 +1,21 @@
+node_modules/
+.env
+.env.local
+.env.*
+!.env.example
+/dist/
+/build/
+dist/
+coverage/
+.next/
+.nuxt/
+.cache/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Vendor repos are fetched by /init-project, not committed
+.agents/vendor/*/*
+!.agents/vendor/*/.gitkeep

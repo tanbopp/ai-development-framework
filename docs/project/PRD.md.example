@@ -1,0 +1,68 @@
+# PRD: UMKM Inventory App (example)
+
+> Example only. UMKM is the Indonesian term for micro, small, and medium enterprises. Real PRDs follow the same 12 sections.
+
+## 1. Goal
+Let a small shop owner track stock levels and get low-stock warnings without a spreadsheet.
+
+## 2. Users
+- Shop owner (primary): non-technical, uses a phone.
+- Shop assistant: records sales and deliveries.
+
+## 3. Out of Scope
+- Accounting, tax reports, payroll.
+- Multi-branch stock transfers.
+- Online marketplace sync.
+
+## 4. Requirements
+
+### REQ-001: Record stock movements
+- **Priority:** must
+- **Rationale:** Stock accuracy is the core value of the product.
+- **Statement:** A user can record an item received or sold with a quantity.
+- **Acceptance criteria:**
+  - [ ] Recording a sale of N units reduces the item's stock by exactly N.
+  - [ ] Recording a delivery of N units raises the stock by exactly N.
+  - [ ] A movement that would make stock negative is rejected with a message.
+  - [ ] Every movement stores who, when, and quantity.
+
+### REQ-002 (stub): Low-stock warning
+- **Priority:** should
+- **Acceptance criteria:**
+  - [ ] An item at or below its threshold appears in a low-stock list.
+
+## 5. Non-Functional Requirements
+| Area | Value |
+| --- | --- |
+| User scale | 1 to 5 users per shop, up to 500 shops |
+| Realtime | Not required |
+| Offline | Required: sales recorded without a connection sync later |
+| Mobile | Required: phone-first |
+| AI/LLM | None |
+| Integrations | None in v1 |
+| Deployment budget | Under USD 20 per month |
+| Maintaining team | One developer |
+
+## 6. Decided-Do-Not-Change
+- Stock is stored as integer units.
+- Movements are append-only. Stock is derived from them.
+
+## 7. Open Questions
+- Are fractional units (for example kilograms) needed?
+
+## 8. Agent Instructions
+Read `.agents/rules/00-constitution.md`. Do not choose a stack. Stop at Gate 1.
+
+## 9. Success Metrics
+- A new shop records its first sale within 10 minutes of sign-up.
+
+## 10. Risks
+- Offline sync conflicts when two phones edit the same item.
+
+## 11. Dependencies
+- None external in v1.
+
+## 12. Glossary
+- **Movement:** a recorded change in stock quantity.
+- **Threshold:** the stock level that triggers a low-stock warning.
+

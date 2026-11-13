@@ -1,0 +1,32 @@
+# DECISIONS (example)
+
+> Example only. The first ADR is the stack decision for the example app. The second documents a real decision made in this template, and doubles as a teaching example of how to justify deviating from an upstream default.
+
+## ADR-001: Offline-capable TypeScript PWA for the UMKM inventory app
+
+- **Status:** Accepted
+- **Date:** 2026-01-15
+- **Context:** REQ-001 requires reliable stock movements on a phone, and the non-functional requirements require offline use under a small budget with one developer.
+- **Options considered:** A) TypeScript PWA, B) Kotlin app with Go backend, C) server-rendered web app.
+- **Decision:** Option A.
+- **Consequences:** We own sync conflict handling. We avoid a second language. Native-only device APIs are not available.
+- **References:** REQ-001, offline NFR, budget NFR, `STACK.md`.
+
+## ADR-002: Use `close-pr: false` for the PR quality gate instead of the upstream default
+
+- **Status:** Accepted
+- **Date:** 2026-11-13
+- **Context:** The template runs `peakoss/anti-slop@v0` on pull requests. Upstream defaults to `max-failures: 4` and `close-pr: true`. The action checks behavior, such as account age, fork velocity, merge history, and template compliance. It does not detect AI-written text. These signals can match legitimate first-time contributors. A public template attracts many of them. The action has no `dry-run` input, so there is no built-in preview mode.
+- **Options considered:**
+  1. Keep the upstream defaults (auto-close at 4 failures).
+  2. Raise `max-failures` only, and keep `close-pr: true`.
+  3. Set `max-failures: 6` and `close-pr: false`, and add a label and comment on failure.
+  4. Do not run the gate.
+- **Decision:** Option 3. A failing PR is labeled `needs-review` and receives a comment, and a maintainer decides.
+- **Why not option 1 or 2:** A false positive closes a real contributor's PR with no human in the loop. That harm is larger than the cost of a maintainer glancing at a flagged PR. Raising the threshold only reduces how often this happens; it does not remove it.
+- **Why not option 4:** The gate still gives maintainers a cheap signal about low-effort PRs.
+- **Consequences:** Maintainers must read flagged PRs. Spam is not auto-closed. This is reversible.
+- **Revisit when:** The gate has run on real traffic and the false-positive rate is known. Then consider a lower `max-failures` or `close-pr: true`, and record a new ADR that supersedes this one.
+- **How to reuse this example:** An ADR names the upstream default, states the harm of each option in your context, and says when to revisit. Copy this shape for your own deviations.
+- **References:** `.github/workflows/pr-quality.yaml`, README section 6, `peakoss/anti-slop` README.
+

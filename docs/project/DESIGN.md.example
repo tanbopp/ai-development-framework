@@ -1,0 +1,45 @@
+# DESIGN: UMKM Inventory App (example)
+
+> Example only. Tokens are minimal. A real file lists the full set.
+
+## Tone
+Practical, calm, trustworthy. A shop owner reads it on a bright phone screen.
+
+## Tokens
+
+### Color
+| Token | Value | Use |
+| --- | --- | --- |
+| `--color-bg` | `#FBFAF7` | Page background |
+| `--color-ink` | `#1E2420` | Body text (contrast 15:1 on bg) |
+| `--color-accent` | `#1F6F5C` | Primary actions (contrast 5.6:1 on bg) |
+| `--color-warn` | `#9A4B00` | Low-stock warning (contrast 5.9:1 on bg) |
+
+### Typography
+| Level | Size / weight |
+| --- | --- |
+| Heading | 28px / 700 |
+| Subheading | 20px / 600 |
+| Body | 16px / 400 |
+
+Font: a humanist sans chosen for numeral clarity (tabular numbers on).
+
+### Spacing
+4, 8, 12, 16, 24, 32 px scale.
+
+## Hard floor (cannot be overridden)
+WCAG AA contrast, visible focus state, `prefers-reduced-motion`, no truncated text on mobile.
+
+## Soft preferences and overrides
+
+| Preference | Status | Justification |
+| --- | --- | --- |
+| Avoid a three-card grid with icons in rounded squares | **Overridden** | The home screen shows exactly three counts (in stock, low, out). Users compare them side by side, so equal cards communicate better than varied layouts. Each card has distinct content, not placeholder icons. |
+| Avoid Inter, Roboto, or Arial as sole identity | Kept | A humanist sans is used. |
+| Avoid glassmorphism | Kept | Flat surfaces. |
+
+An override is valid only with a named preference, a reason, and the brand context, as above.
+
+## Component states
+Every component defines default, hover, focus, disabled, loading, and error.
+

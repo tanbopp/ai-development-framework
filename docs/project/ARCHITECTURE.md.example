@@ -1,0 +1,35 @@
+# ARCHITECTURE: UMKM Inventory App (example)
+
+> Example only. Assumes Option A from `STACK.md.example`.
+
+## Components
+- **UI:** phone-first PWA screens (stock list, record movement, low-stock list).
+- **Movement service:** validates and appends stock movements.
+- **Local store:** on-device storage holding movements and a derived stock view.
+- **Sync service:** uploads pending movements, downloads others' movements.
+- **API:** small serverless API with auth and a movements endpoint.
+
+## Data flow
+1. User records a sale (REQ-001).
+2. Movement service validates: quantity is a positive integer and stock stays at or above zero.
+3. The movement is appended to the local store with a device ID and timestamp.
+4. The derived stock view updates.
+5. When online, the sync service posts pending movements, then pulls remote ones and replays them in timestamp order.
+
+## Boundaries
+- Validation lives in the movement service only. The UI never edits stock directly.
+- The API re-validates every movement. Client input is untrusted.
+
+## Error handling
+- Rejected movement: show the reason inline, store nothing.
+- Sync failure: keep movements pending, retry with backoff, show a quiet status.
+- Conflict that would cause negative stock: flag the item for owner review.
+
+## Observability
+- Structured logs on the API. Count of pending movements shown in the app.
+
+## Testing strategy
+- **Unit:** movement validation, stock derivation, replay ordering.
+- **E2E:** record a sale offline, reconnect, confirm stock converges on two devices.
+- **Audit:** `design-audit` and `copy-audit` before delivery.
+
