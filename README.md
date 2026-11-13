@@ -25,6 +25,8 @@ npx skills add nutlope/hallmark
 npx -y unslop-mcp@latest init
 ```
 
+Windows users: Antigravity runs commands in PowerShell, not bash. The `/init-project` workflow handles this automatically. If you want to run the manual commands yourself, use the PowerShell block in `.agents/workflows/init-project.md` instead of the bash block.
+
 `/init-project` handles the `.gitkeep` placeholders automatically. If you prefer to run the clone commands manually, run them after deleting the corresponding `.gitkeep` file.
 
 **The vendor directories are intentionally empty in this template.** `.agents/vendor/*` contains only `.gitkeep` files, because the vendor repos keep their own licenses and are fetched at install time. You must run `/init-project` before `/full-cycle`. Without it, Ponytail and design-taste-frontend are missing, and Hallmark and unslop are not installed, so the design audits will not function. Phases 1 to 5 can still produce documents, but the Phase 7 audit cannot run its tools.

@@ -5,35 +5,48 @@ Trigger: `/init-project`
 Prepares a fresh workspace. Safe to re-run: skip anything already present.
 
 ## Process
-1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, and `.agents/workflows/` exist and every rule has a valid `trigger` frontmatter.
-2. Remove the placeholder `.gitkeep` files and clone the vendor repos (skip if already cloned, and continue on individual failure):
-   ```bash
-   # Remove placeholder .gitkeep files (safe to re-run)
-   rm -f .agents/vendor/ponytail/.gitkeep
-   rm -f .agents/vendor/design-taste-frontend/.gitkeep
-   rm -f .agents/vendor/hallmark/.gitkeep
-   rm -f .agents/vendor/unslop/.gitkeep
+Platform note. Antigravity agents run commands in the shell of the host OS: bash on macOS and Linux, PowerShell on Windows. Prefer the agent's built-in file and git tools over shell commands where possible, so the workflow works on any platform. When shell commands are necessary, use the platform-appropriate block from the examples below.
 
-   # Clone vendor repos (skip if already cloned)
-   if [ ! -d .agents/vendor/ponytail/.git ]; then
-     git clone --depth 1 https://github.com/DietrichGebert/ponytail.git .agents/vendor/ponytail || echo "WARN: ponytail clone failed"
-   fi
-   if [ ! -d .agents/vendor/design-taste-frontend/.git ]; then
-     git clone --depth 1 https://github.com/changemaner/design-taste-frontend.git .agents/vendor/design-taste-frontend || echo "WARN: design-taste-frontend clone failed"
-   fi
+1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, and `.agents/workflows/` exist and every rule has a valid `trigger` frontmatter.
+2. Prepare the vendor directories. The template ships each vendor folder with a `.gitkeep` placeholder. Before cloning, remove the placeholder:
+
+   - Delete these four files if they exist: `.agents/vendor/ponytail/.gitkeep`, `.agents/vendor/design-taste-frontend/.gitkeep`, `.agents/vendor/hallmark/.gitkeep`, `.agents/vendor/unslop/.gitkeep`.
+   - The agent should use its file-deletion tool, not a shell command, so this works on any platform.
+   - Removing these files is safe because they only exist in the fresh template state. They are placeholders, not data.
+
+   Then clone each vendor repo whose target directory does not already contain a `.git` subdirectory (safe to re-run). Continue on individual failure so one broken clone does not block the rest.
+
+   Manual commands -- **bash / Git Bash / WSL**:
+   ```bash
+   rm -f .agents/vendor/ponytail/.gitkeep .agents/vendor/design-taste-frontend/.gitkeep .agents/vendor/hallmark/.gitkeep .agents/vendor/unslop/.gitkeep
+   [ -d .agents/vendor/ponytail/.git ] || git clone --depth 1 https://github.com/DietrichGebert/ponytail.git .agents/vendor/ponytail || echo "WARN: ponytail clone failed"
+   [ -d .agents/vendor/design-taste-frontend/.git ] || git clone --depth 1 https://github.com/changemaner/design-taste-frontend.git .agents/vendor/design-taste-frontend || echo "WARN: design-taste-frontend clone failed"
    ```
-   The `.gitkeep` files are placeholders committed to the template. They are removed before cloning because `git clone` refuses non-empty target directories. Removing them is safe because they only exist in the fresh template state.
+
+   Manual commands -- **PowerShell (Windows)**:
+   ```powershell
+   Remove-Item -Force -ErrorAction SilentlyContinue .agents/vendor/ponytail/.gitkeep, .agents/vendor/design-taste-frontend/.gitkeep, .agents/vendor/hallmark/.gitkeep, .agents/vendor/unslop/.gitkeep
+   if (-not (Test-Path .agents/vendor/ponytail/.git)) { git clone --depth 1 https://github.com/DietrichGebert/ponytail.git .agents/vendor/ponytail }
+   if (-not (Test-Path .agents/vendor/design-taste-frontend/.git)) { git clone --depth 1 https://github.com/changemaner/design-taste-frontend.git .agents/vendor/design-taste-frontend }
+   ```
 3. Install Hallmark (auditor and skill). Preferred:
    ```bash
    npx skills add nutlope/hallmark
    ```
-   Alternative (ensure `.agents/vendor/hallmark/.gitkeep` is removed first; Step 2 already removes it, and skip if already cloned):
+   Alternative (only if the preferred method fails; the `.gitkeep` is already removed in Step 2):
+
+   Clone `https://github.com/Nutlope/hallmark.git` into `.agents/vendor/hallmark`, but only if that directory does not yet contain a `.git` subdirectory.
+
+   Manual command -- bash:
    ```bash
-   rm -f .agents/vendor/hallmark/.gitkeep
-   if [ ! -d .agents/vendor/hallmark/.git ]; then
-     git clone --depth 1 https://github.com/Nutlope/hallmark.git .agents/vendor/hallmark || echo "WARN: hallmark clone failed"
-   fi
+   [ -d .agents/vendor/hallmark/.git ] || git clone --depth 1 https://github.com/Nutlope/hallmark.git .agents/vendor/hallmark
    ```
+
+   Manual command -- PowerShell:
+   ```powershell
+   if (-not (Test-Path .agents/vendor/hallmark/.git)) { git clone --depth 1 https://github.com/Nutlope/hallmark.git .agents/vendor/hallmark }
+   ```
+
    Browser checks (`sloplint --render`) also need `npm i -g puppeteer-core` and Chrome; static checks run without them.
 4. Install unslop (auditor and MCP server):
    ```bash
