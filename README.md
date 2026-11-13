@@ -27,6 +27,8 @@ npx -y unslop-mcp@latest init
 
 Windows users: Antigravity runs commands in PowerShell, not bash. The `/init-project` workflow handles this automatically. If you want to run the manual commands yourself, use the PowerShell block in `.agents/workflows/init-project.md` instead of the bash block.
 
+`/init-project` runs `unslop init` and then cleans up its side effects: `AGENTS.md` is restored to the framework version (removing unslop's "Linear Precision" preset, which conflicts with `02-design-principles.md`), and unslop's IDE-specific config files are removed. Only `.agents/skills/unslop/SKILL.md` and `.mcp.json` are kept. If you prefer unslop's preset colors, override them in `docs/project/DESIGN.md` with a written justification.
+
 `/init-project` handles the `.gitkeep` placeholders automatically. If you prefer to run the clone commands manually, run them after deleting the corresponding `.gitkeep` file.
 
 **The vendor directories are intentionally empty in this template.** `.agents/vendor/*` contains only `.gitkeep` files, because the vendor repos keep their own licenses and are fetched at install time. You must run `/init-project` before `/full-cycle`. Without it, Ponytail and design-taste-frontend are missing, and Hallmark and unslop are not installed, so the design audits will not function. Phases 1 to 5 can still produce documents, but the Phase 7 audit cannot run its tools.

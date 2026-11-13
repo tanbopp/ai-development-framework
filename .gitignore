@@ -19,3 +19,15 @@ Thumbs.db
 # Vendor repos are fetched by /init-project, not committed
 .agents/vendor/*/*
 !.agents/vendor/*/.gitkeep
+
+# unslop init artifacts (framework uses .agents/skills/unslop and .mcp.json only)
+CLAUDE.md
+.claude/
+.claude-plugin/
+.cursor/
+.cursorrules
+.windsurfrules
+.clinerules
+.zed/
+skills-lock.json
+opencode.json

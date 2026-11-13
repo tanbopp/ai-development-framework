@@ -13,7 +13,13 @@ Before delivering frontend output.
 2. Soft-preference checks (Hallmark Reflex and Finish tiers, unslop rules). On violation, look in `DESIGN.md` for a written brand justification. If present, pass. If absent, request a fix.
 3. Produce a per-item report: pass/fail, tier (hard/soft), rationale, suggested fix.
 
-Tools (audit only, never generate): `node .agents/vendor/hallmark/skills/hallmark/scripts/sloplint.mjs <path> --render` or `/hallmark audit <path>`; `npx -y unslop-mcp audit . --json --no-fail`. If a tool is unavailable, perform the checks manually and say so in the report.
+Tools (audit only, never generate):
+- Hallmark: `node <sloplint-path> <path> --render` or `/hallmark audit <path>`. Hallmark's sloplint script may be at either path depending on how Hallmark was installed:
+  - `.agents/skills/hallmark/scripts/sloplint.mjs` (installed via `npx skills add`)
+  - `.agents/vendor/hallmark/skills/hallmark/scripts/sloplint.mjs` (cloned manually)
+
+  Use whichever exists. If neither exists, Hallmark is not installed -- report this and stop the audit.
+- unslop: `npx -y unslop-mcp audit . --json --no-fail`. If unavailable, perform the checks manually and say so in the report.
 
 ## Output Contract
 An audit report. Reject on any hard-floor violation. Reject on soft preferences only when no justification exists.

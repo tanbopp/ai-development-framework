@@ -48,11 +48,30 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
    ```
 
    Browser checks (`sloplint --render`) also need `npm i -g puppeteer-core` and Chrome; static checks run without them.
-4. Install unslop (auditor and MCP server):
-   ```bash
-   npx -y unslop-mcp@latest init
-   ```
-   Note: unslop's 72 rules include subjective preferences. Audits must allow overrides justified in `docs/project/DESIGN.md`. `init` writes agent files (for example `AGENTS.md`, `.mcp.json`) and merges into existing ones; review the diff before committing.
+4. Install unslop (auditor and MCP server) without keeping its `AGENTS.md` preset or extra IDE configs:
+   1. Read the current `AGENTS.md` content and hold it in memory (or write it to a temporary backup file `AGENTS.md.framework-backup`).
+   2. Run:
+      ```bash
+      npx -y unslop-mcp@latest init
+      ```
+   3. Overwrite `AGENTS.md` with the saved framework content (this removes unslop's "Linear Precision" preset while keeping `.agents/skills/unslop/SKILL.md` and `.mcp.json` intact).
+   4. Delete `AGENTS.md.framework-backup` if created.
+   Note: unslop's 72 rules include subjective preferences. Audits must allow overrides justified in `docs/project/DESIGN.md`.
+
+   ### Cleanup after unslop init
+   unslop `init` writes many IDE-specific config files and appends a "Linear Precision" preset to `AGENTS.md`. The preset uses `#5e6ad2` (purple/indigo) and `Inter`, both of which are anti-patterns in `02-design-principles.md`. The framework's design authority is `design-taste-frontend` with tokens defined in `DESIGN.md`, not unslop's preset.
+
+   After `unslop init` completes:
+
+   1. Restore `AGENTS.md` to its pre-init content (the framework version, not the merged version). The unslop SKILL.md and `.mcp.json` remain in place; only the AGENTS.md directive is removed.
+   2. Delete these files/directories if they exist (created by unslop init, not needed for Antigravity):
+      - `CLAUDE.md`, `.claude/`, `.claude-plugin/`
+      - `.cursor/`, `.cursorrules`
+      - `.windsurfrules`, `.clinerules`, `.zed/`
+      - `.github/copilot-instructions.md`
+      - `opencode.json`, `skills-lock.json`
+   3. Keep: `.agents/skills/unslop/SKILL.md`, `.mcp.json`
+   4. Report which files were removed.
 5. Do not modify vendor contents. Adapt only in the wrapper layer (`.agents/skills/`).
 6. Print the readiness checklist. If any clone or install step fails, report which vendor repositories or tools are missing, continue with the remaining steps, and mark the failed items as unchecked in the readiness checklist. Do not silently proceed.
 
@@ -64,6 +83,8 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
 - [ ] `.agents/vendor/design-taste-frontend/` populated
 - [ ] Hallmark installed
 - [ ] unslop initialized
+- [ ] `AGENTS.md` restored to framework version (no unslop preset)
+- [ ] unslop IDE config files cleaned up (see Cleanup section)
 - [ ] `.github/workflows/pr-quality.yaml` present
 
 ## Notes

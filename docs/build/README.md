@@ -7,3 +7,4 @@ This folder documents how the framework was generated.
 The framework itself lives at the repository root (`.agents/`, `docs/`, `AGENTS.md`, `README.md`).
 
 Do not run `MASTER_PROMPT.md`. It is historical documentation only.
+
