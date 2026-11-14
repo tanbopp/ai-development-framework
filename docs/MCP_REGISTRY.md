@@ -84,6 +84,14 @@ npx -y <package-name> --help
 | **Autonomous Fixing** | `security-mcp` | Autonomously patch verified SAST/SCA findings in the working tree and re-verify fixes (`security-gate`). | Register `security-mcp` in `mcp_config.json`. |
 | **Proving Findings** | `Sabba` | Prove exploitability and triage real security findings before Phase 8 sign-off (`security-gate`). | Register `Sabba` in `mcp_config.json` per upstream docs. |
 
+### 9. Interaction & Cognitive QA
+| Tool / Server | Purpose | Typical Setup |
+| --- | --- | --- |
+| `designlang verify-ui <url> --brand DESIGN.md` | Renders built pages at `390` / `768` / `1280` and lists every drift from `DESIGN.md`; exits `1` on drift (CI gate). | Run `designlang verify-ui <url> --brand docs/project/DESIGN.md` via CLI or `designlang` MCP. |
+| `designlang slop <url>` | Scores how generic the rendered page looks against 10 measured AI-slop tells. | Run `designlang slop <url>` during Phase 7 QA before sign-off. |
+| `unslop-preflight` | Runs source-level UI slop checks (`node scripts/scan-ui-implementation.mjs src`) and viewport-fit checks (`node scripts/scan-viewport-fit.mjs http://localhost:3000`) for `ui-interaction-authority` and `viewport-qa`. | Install `unslop-preflight` scripts and run against `src` and the local dev server. |
+| `squint-mcp` *(optional)* | Cross-references DOM/CSS with painted pixels to detect visual problems without a reference baseline. | Register `squint-mcp` in `mcp_config.json` per upstream docs. |
+
 ### Bundled Audit MCP (Installed by `/init-project`)
 - `unslop` (`npx -y unslop-mcp@latest init`): Registers `.mcp.json` at the workspace root for the 72-rule Design Craft Engine used by `design-audit`.
 

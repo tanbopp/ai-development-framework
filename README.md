@@ -50,14 +50,14 @@ Hallmark can also be cloned manually into `.agents/vendor/hallmark/`. `unslop in
   rules/       Always-on and contextual rules (YAML frontmatter with a valid trigger is required)
   agents/      planner, architect, frontend, qa, devops
   platforms/   Conditional platform packs: web, desktop, mobile, plugin, cli
-  skills/      26 versioned skills (v4.0.0 / v4.1.0), with progressive-disclosure references/ subfolders
+  skills/      35 versioned skills (v4.0.0 - v6.0.0), with progressive-disclosure references/ subfolders
                (Layer 2 Warm Memory) loaded on-demand so SKILL.md stays under 500 lines
   workflows/   init-project, onboard, plan-feature, full-cycle, auto-build, transactional-wave
   vendor/      ponytail, hallmark, design-taste-frontend, unslop (fetched by /init-project)
 docs/
-  MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, mobile, security, memory
+  MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, interaction QA, mobile, security, memory
   history/     Immutable Prompt History Records (`PHR-[YYYYMMDD-HHMM].md`)
-  project/     PREFLIGHT, PRD, STACK, DESIGN, ARCHITECTURE, ANALYSIS, DECISIONS (see .example files)
+  project/     PREFLIGHT, PRD, THREAT_MODEL, STACK, DESIGN, INTERACTION_AUDIT, ARCHITECTURE, ANALYSIS, DECISIONS (see .example files)
   specs/       Per-feature specs, each under 250 lines
   tasks/       TASKS.md, verification logs (logs/*.log), and audit or deploy reports
 .github/workflows/pr-quality.yaml   Pull-request quality gate
@@ -80,6 +80,13 @@ Rules without valid frontmatter are silently discarded by Antigravity, and rule 
 - **Two-Axis Review (`meta-judge` & `design-audit`):** Splits every Phase 7 audit report into **Axis 1: Agent Fix List** (technical findings fixed automatically by the AI) and **Axis 2: Human Decision List** (product and intent trade-offs reserved for human review).
 - **Immutable Prompt History Records (`prompt-history`):** Appends structured audit records to `docs/history/PHR-[YYYYMMDD-HHMM].md` at phase completions and workflow endings to maintain an immutable execution and decision trail.
 - **Architecture Guard & 800 LOC Limit (`architecture-guard` & `code-quality-gate`):** Validates actual repository folders and module imports against `ARCHITECTURE.md` during Phase 7 to stop Architectural Drift, and enforces an 800-LOC limit per task or PR so diffs stay reviewable.
+
+## V6: Interaction & Cognitive Quality Gate
+
+- **Native Primitive Ban & Portal Enforcement (`ui-interaction-authority`):** Run before generating any Phase 6 UI interactive code (`docs/project/INTERACTION_AUDIT.md`). Bans unapproved native `<select>`, `<input type="date">`, `<input type="time">`, `alert()`, `confirm()`, and `prompt()`; enforces the single designated headless UI library from `STACK.md`, `portal={true}` rendering in `document.body`, and collision detection (`flip`, `shift`, `autoUpdate`).
+- **Multi-Viewport Clipping & Overflow Gate (`viewport-qa`):** Run in Phase 7 (mandatory before `design-audit` passes) and as a Pre-Phase 8 Interaction Gate (`docs/tasks/logs/viewport-qa.log`). Checks `320` to `1440px` viewports, bans shell `overflow: hidden` masking, verifies unclipped floating portals and auth page height, and **blocks Phase 8 delivery** on failure.
+- **Progressive Disclosure & Cognitive Load Gate (`cognitive-load-auditor`):** Run in Phase 7 (mandatory before `design-audit` passes) and as a Pre-Phase 8 Interaction Gate (`## Cognitive Load` in `docs/tasks/AUDIT.md`). Enforces the Rule of Five (`<= 5` key metrics/fields without progressive disclosure), 7-field form splitting, zero redundant on-screen values, and a single primary CTA per view, **blocking Phase 8 delivery** if thresholds fail.
+- **Interaction & Cognitive QA Registry (`docs/MCP_REGISTRY.md`):** Adds CLI and MCP verification hooks for `designlang verify-ui <url> --brand DESIGN.md`, `designlang slop <url>`, `unslop-preflight` (`scan-ui-implementation.mjs` and `scan-viewport-fit.mjs`), and optional `squint-mcp`.
 
 ## 5. Integrated repos and honest trade-offs
 

@@ -25,6 +25,7 @@ You MUST run `environment-preflight` before starting. You MUST use `boundary-gua
 ## Core Rules
 - **Stack:** decided per project in `docs/project/STACK.md`. Do not assume one.
 - **Design system:** decided per project in `docs/project/DESIGN.md`. Do not reuse another project's tokens.
+- **Interaction Rule:** Never use native `<select>`, `<input type="date">`, `alert()`, `confirm()`, or `prompt()` for core UI. Use the designated headless library with `portal={true}` and collision detection. Keep every viewport free of horizontal scroll and every floating element unclipped.
 - **Entry points:**
   - `docs/project/PRD.md`
   - `docs/project/STACK.md`
