@@ -20,7 +20,9 @@ Before delivering frontend output.
    - If visual mismatches exceed 5% or token colors do not match `DESIGN.md`, **REJECT** the implementation and send a concrete list of visual discrepancies to the Frontend Agent.
 5. **Deterministic Pixel & Token Audit.**
    - If `plumb-cli` or `onsystem` MCP is available, run it to perform a deterministic pixel-perfect check against the tokens defined in `docs/project/DESIGN.md`. If unavailable, fallback to Hallmark/unslop.
-6. Produce a per-item report: pass/fail, tier (hard/soft/visual-regression/deterministic), rationale, suggested fix.
+6. **Two-Axis Review Output:** Produce a per-item report (pass/fail, tier: hard/soft/visual-regression/deterministic, rationale, suggested fix) split into two distinct sections:
+   - **Axis 1: Agent Fix List:** Technical findings that the AI MUST fix automatically (for example, WCAG contrast < 4.5, missing `alt` tags, TypeScript `any`, truncated mobile layouts, or broken tokens).
+   - **Axis 2: Human Decision List:** Findings that require human intent (for example, "Is this UX flow intuitive?", "Should this override remain part of brand expression?", or product trade-offs).
 
 Tools (audit only, never generate):
 - Deterministic audit: `plumb-cli`, `onsystem`, or `@usespectra/mcp` MCP tools when available.
@@ -33,7 +35,7 @@ Tools (audit only, never generate):
 - Visual regression: `vrt-mcp` or `zerovisual` MCP tools, paired with Playwright or Puppeteer screenshots.
 
 ## Output Contract
-An audit report. Reject on any hard-floor violation, any deterministic token mismatch, any visual regression diff above 5%, or any token mismatch against `DESIGN.md`. Reject on soft preferences only when no justification exists.
+A Two-Axis audit report (`Axis 1: Agent Fix List` and `Axis 2: Human Decision List`). Reject on any hard-floor violation, any deterministic token mismatch, any visual regression diff above 5%, or any token mismatch against `DESIGN.md`. Reject on soft preferences only when no justification exists. The report MUST explicitly state: **"Agents will fix Axis 1. The human must review Axis 2."**
 
 ## Checklist
 - [ ] All five hard-floor checks run
@@ -41,7 +43,7 @@ An audit report. Reject on any hard-floor violation, any deterministic token mis
 - [ ] Deterministic token check run via `plumb-cli` / `onsystem` MCP (or fallback to Hallmark/unslop recorded)
 - [ ] Screenshot captured and rendered tokens verified against `DESIGN.md`
 - [ ] Visual regression check run when a reference exists (diff <= 5%)
-- [ ] Report lists tier for each item
+- [ ] Output split into **Axis 1: Agent Fix List** and **Axis 2: Human Decision List** with tier per item
 
 ## Prohibitions
 - Imposing a single design taste on every project.

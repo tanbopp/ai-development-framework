@@ -35,6 +35,7 @@ You MUST run `environment-preflight` before starting. You MUST use `boundary-gua
   - Read `.agents/rules/00-constitution.md` before starting.
   - Before starting any task, read `.agents/MEMORY.md` and `.agents/LESSONS.md`.
   - Keep `SKILL.md` files under 500 lines. If deep detail is needed, put it in a `references/` subfolder and instruct the AI to read it on-demand.
+  - At the end of every workflow, run `prompt-history` to log the session.
   - If something is ambiguous, stop and ask.
   - Audit before delivery.
 - **Forbidden:**

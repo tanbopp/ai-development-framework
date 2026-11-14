@@ -50,13 +50,14 @@ Hallmark can also be cloned manually into `.agents/vendor/hallmark/`. `unslop in
   rules/       Always-on and contextual rules (YAML frontmatter with a valid trigger is required)
   agents/      planner, architect, frontend, qa, devops
   platforms/   Conditional platform packs: web, desktop, mobile, plugin, cli
-  skills/      23 versioned skills (v4.0.0), with progressive-disclosure references/ subfolders
+  skills/      26 versioned skills (v4.0.0 / v4.1.0), with progressive-disclosure references/ subfolders
                (Layer 2 Warm Memory) loaded on-demand so SKILL.md stays under 500 lines
   workflows/   init-project, onboard, plan-feature, full-cycle, auto-build, transactional-wave
   vendor/      ponytail, hallmark, design-taste-frontend, unslop (fetched by /init-project)
 docs/
   MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, mobile, security, memory
-  project/     PREFLIGHT, PRD, STACK, DESIGN, ARCHITECTURE, DECISIONS (see the .example files)
+  history/     Immutable Prompt History Records (`PHR-[YYYYMMDD-HHMM].md`)
+  project/     PREFLIGHT, PRD, STACK, DESIGN, ARCHITECTURE, ANALYSIS, DECISIONS (see .example files)
   specs/       Per-feature specs, each under 250 lines
   tasks/       TASKS.md, verification logs (logs/*.log), and audit or deploy reports
 .github/workflows/pr-quality.yaml   Pull-request quality gate
@@ -72,6 +73,13 @@ Rules without valid frontmatter are silently discarded by Antigravity, and rule 
 - **AI Soul (`.agents/SOUL.md`):** Every coding task runs under a consistent Senior Engineer identity grounded in the Karpathy Guidelines (think before acting, simplicity first, surgical changes, goal-driven execution) and strict code hygiene (no nested ternaries, no silent `catch` blocks, descriptive names, and *why*-only comments).
 - **Multi-Platform Packs (`.agents/platforms/`):** The framework is not limited to web apps. When `stack-advisor` targets Mobile (React Native/Expo or Flutter), Desktop (Tauri v2 or Electron), CLI (Node.js or Go), Plugins (VS Code, Chrome, Figma), or Web (Next.js, Vite, SvelteKit, React), the agent loads the matching platform pack for IPC security, offline storage, 44px touch targets, exit codes, and platform-specific tests.
 - **MCP Stack & Quality Intelligence (`docs/MCP_REGISTRY.md` & `mcp-discovery`):** During Phase 2 and Phase 3, `mcp-discovery` recommends MCP servers tailored to your PRD and queries `techspace-mcp` when connected to evaluate Pareto-optimal stacks (falling back cleanly to `stack-advisor` when offline or unconfigured). Database and OWASP checks run via `database-architect` and `security-hardening`.
+
+## V4.1: Ultimate Integration
+
+- **Cross-Artifact Consistency Analyzer (`artifact-analyzer`):** Spec Kit-style read-only semantic analyzer run between Phase 4 and Phase 5 (`docs/project/ANALYSIS.md`) to detect ambiguity, cross-spec inconsistencies, duplicate requirements, or `00-constitution.md` violations and block Phase 5 on critical findings.
+- **Two-Axis Review (`meta-judge` & `design-audit`):** Splits every Phase 7 audit report into **Axis 1: Agent Fix List** (technical findings fixed automatically by the AI) and **Axis 2: Human Decision List** (product and intent trade-offs reserved for human review).
+- **Immutable Prompt History Records (`prompt-history`):** Appends structured audit records to `docs/history/PHR-[YYYYMMDD-HHMM].md` at phase completions and workflow endings to maintain an immutable execution and decision trail.
+- **Architecture Guard & 800 LOC Limit (`architecture-guard` & `code-quality-gate`):** Validates actual repository folders and module imports against `ARCHITECTURE.md` during Phase 7 to stop Architectural Drift, and enforces an 800-LOC limit per task or PR so diffs stay reviewable.
 
 ## 5. Integrated repos and honest trade-offs
 

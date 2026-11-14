@@ -1,6 +1,8 @@
 ---
 name: mcp-discovery
 description: Recommends project-specific MCP servers from docs/MCP_REGISTRY.md (including memory-seed for large existing codebases) and uses techspace-mcp with LLM fallback to stack-advisor. Use in Phases 1-3.
+version: 4.0.0
+status: active
 ---
 
 # MCP Discovery
