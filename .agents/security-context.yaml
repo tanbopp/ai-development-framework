@@ -1,0 +1,76 @@
+# Project-Agnostic Threat Model Template (Aegis-compatible schema)
+# Used by security-context-manager in Phase 1 and Phase 3 -> docs/project/THREAT_MODEL.md
+
+schema_version: "1.0.0"
+
+project:
+  name: "[Project Name]"
+  platform: "[web | desktop | mobile | plugin | cli]"
+  stack: "[From docs/project/STACK.md]"
+  database: "[From docs/project/STACK.md]"
+
+trust_boundaries:
+  - name: "client-to-api"
+    description: "Untrusted client UI, CLI, extension, or IPC payloads crossing into backend or core handlers"
+    controls:
+      - "Strict schema validation at every entry boundary"
+      - "Server-side session verification and RBAC/ABAC authorization"
+  - name: "api-to-persistence"
+    description: "Application logic reading from or mutating SQL, NoSQL, ORM, or RLS-protected storage"
+    controls:
+      - "Parameterized queries or ORM bindings only"
+      - "Explicit tenant/user resource ownership checks (IDOR prevention)"
+  - name: "external-services-and-agents"
+    description: "Webhooks, third-party APIs, external URLs, and MCP tool integrations"
+    controls:
+      - "Cryptographic signature validation, SSRF allowlists, and tool-scope limits"
+
+data_classifications:
+  PII:
+    enabled: false
+    examples: ["name", "email", "phone", "ip_address", "user_id"]
+    required_controls: ["tls_in_transit", "encryption_at_rest", "least_privilege_access"]
+  PHI:
+    enabled: false
+    examples: ["medical_history", "diagnostics", "patient_identifiers"]
+    required_controls: ["audit_logging", "strict_tenant_isolation", "encryption_at_rest"]
+  PCI:
+    enabled: false
+    examples: ["payment_tokens", "cardholder_metadata"]
+    required_controls: ["hosted_tokenization_only", "never_store_raw_card_data"]
+  internal:
+    enabled: true
+    examples: ["session_state", "audit_logs", "operational_metrics"]
+    required_controls: ["authenticated_access", "rbac_or_abac"]
+  public:
+    enabled: true
+    examples: ["landing_copy", "public_documentation"]
+    required_controls: ["xss_safe_output_encoding"]
+
+authentication_required:
+  enabled: true
+  mechanism: "[session_cookie | jwt | oauth2_oidc | os_keychain | api_key]"
+  authorization_model: "[RBAC | ABAC | RLS | single_user_local]"
+  idor_prevention: "Derive caller identity server-side and verify ownership on every protected read/write"
+
+input_validation_standard:
+  validator: "[Zod | Valibot | Joi | Pydantic | serde | custom_strict_schema]"
+  fail_closed: true
+  reject_unknown_fields: true
+
+output_encoding_required:
+  enabled: true
+  html_rich_text_policy: "Escape output by default; sanitize strictly with an allowlist library if rich text is in REQ-XXX"
+  error_disclosure_policy: "Return generic errors to callers; keep stack traces and diagnostics internal only"
+
+secrets_management:
+  storage: "[env_vars | cloud_secret_manager | os_keychain]"
+  commit_secrets_forbidden: true
+  gitignore_verified: true
+  rotation_policy: "Rotate credentials on suspected exposure or environment changes"
+
+compliance_standards:
+  - "OWASP Top 10"
+  - "OWASP ASVS Level 1/2"
+  - "OWASP Top 10 for Agentic Applications 2026 (ASI01-ASI10)"
+  - "SOC2 (enable controls per PRD NFRs)"

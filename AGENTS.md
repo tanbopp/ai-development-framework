@@ -17,7 +17,7 @@ Read and embody `.agents/SOUL.md` before writing any code. Maintain this persona
 Always check `.agents/platforms/<platform>/SKILL.md` based on the platform chosen in `STACK.md`. Do not write web-only code for a desktop or mobile app.
 
 ## Security First
-Run the `security-hardening` and `database-architect` skills during implementation and audit. Never deliver code with unvalidated inputs or silent errors.
+Run `security-context-manager` (using `.agents/security-context.yaml` -> `docs/project/THREAT_MODEL.md`) in planning/design, and run `security-hardening` (including `references/secure-coding-rules.md`) and `database-architect` during implementation and audit. All generated code MUST pass SAST (`sast-scanner`), SCA/secret scanning (`sca-secret-scanner`), DAST (`dast-scanner` when runnable), `agentic-security-guard`, and `security-gate` checks before delivery. Never deliver code with unvalidated inputs, hardcoded secrets, `HIGH`/`CRITICAL` findings, or silent errors.
 
 ## Execution Safety
 You MUST run `environment-preflight` before starting. You MUST use `boundary-guard` to restrict file edits. You MUST use `human-in-the-loop` before modifying critical files.

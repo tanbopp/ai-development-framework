@@ -16,6 +16,7 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
    - Verify the V4 Phase 4 design integration upgrade exists: `.agents/skills/design-system-integrator/SKILL.md` and `docs/MCP_REGISTRY.md` includes the `Design System & Visual Audit` and `Memory & Context` sections.
    - Verify the V4 Phase 5 foundation files exist: `.agents/workflows/onboard.md` (`/onboard`), `.agents/workflows/transactional-wave.md`, `version: 4.0.0` and `status: active` in skill frontmatter, and progressive-disclosure `references/` docs (`security-hardening/references/owasp-checklist.md`, `database-architect/references/db-patterns.md`, `design-system-integrator/references/mcp-design-tools.md`).
    - Verify the V4.1 integration skills exist: `.agents/skills/artifact-analyzer/SKILL.md`, `.agents/skills/prompt-history/SKILL.md`, and `.agents/skills/architecture-guard/SKILL.md`.
+   - Verify the V5 Security Fortress files exist: `.agents/security-context.yaml`, `.agents/skills/security-hardening/references/secure-coding-rules.md`, and skills `security-context-manager/SKILL.md`, `sast-scanner/SKILL.md`, `sca-secret-scanner/SKILL.md`, `dast-scanner/SKILL.md`, `security-gate/SKILL.md`, and `agentic-security-guard/SKILL.md`.
 2. Prepare the vendor directories. The template ships each vendor folder with a `.gitkeep` placeholder. Before cloning, remove the placeholder:
 
    - Delete these four files if they exist: `.agents/vendor/ponytail/.gitkeep`, `.agents/vendor/design-taste-frontend/.gitkeep`, `.agents/vendor/hallmark/.gitkeep`, `.agents/vendor/unslop/.gitkeep`.
@@ -90,9 +91,10 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
 - [ ] `.agents/platforms/` present (web, desktop, mobile, plugin, cli)
 - [ ] Agents present (planner, architect, frontend, qa, devops)
 - [ ] `.agents/workflows/onboard.md` (`/onboard`) and `.agents/workflows/transactional-wave.md` present
-- [ ] Progressive-disclosure `references/` files present (`ears-syntax.md`, `owasp-checklist.md`, `db-patterns.md`, `mcp-design-tools.md`)
-- [ ] Skills present (26, all with `status: active` and `version: 4.0.0` or `4.1.0`, including `design-system-integrator`, `database-architect`, `security-hardening`, `mcp-discovery`, `environment-preflight`, `boundary-guard`, `snapshot-rollback`, `human-in-the-loop`, `lessons-learned`, `context-grounding`, `evidence-gated-blocking`, `test-suite-auditor`, `meta-judge`, `cost-estimator`, `artifact-analyzer`, `prompt-history`, `architecture-guard`)
-- [ ] `docs/MCP_REGISTRY.md` present with expanded MCP categories (`Memory & Context`, `Design System & Visual Audit`: Figma, token extraction, zero-design, component search, deterministic visual audit)
+- [ ] `.agents/security-context.yaml` present with threat model template fields
+- [ ] Progressive-disclosure `references/` files present (`ears-syntax.md`, `owasp-checklist.md`, `secure-coding-rules.md`, `db-patterns.md`, `mcp-design-tools.md`)
+- [ ] Skills present (32, all with `status: active` and `version: 4.0.0`, `4.1.0`, or `5.0.0`, including `design-system-integrator`, `database-architect`, `security-hardening`, `mcp-discovery`, `environment-preflight`, `boundary-guard`, `snapshot-rollback`, `human-in-the-loop`, `lessons-learned`, `context-grounding`, `evidence-gated-blocking`, `test-suite-auditor`, `meta-judge`, `cost-estimator`, `artifact-analyzer`, `prompt-history`, `architecture-guard`, `security-context-manager`, `sast-scanner`, `sca-secret-scanner`, `dast-scanner`, `security-gate`, `agentic-security-guard`)
+- [ ] `docs/MCP_REGISTRY.md` present with expanded MCP categories (`Memory & Context`, `Design System & Visual Audit`, `Security & Compliance`: Aegis MCP, Semgrep MCP, GoThreatScope, VibeShift, BreachKit, security-mcp)
 - [ ] `.agents/vendor/ponytail/` populated
 - [ ] `.agents/vendor/design-taste-frontend/` populated
 - [ ] Hallmark installed

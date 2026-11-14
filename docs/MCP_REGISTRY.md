@@ -74,6 +74,16 @@ npx -y <package-name> --help
 | **Component & Token Search** | `ds-pilot`, `brandrail`, `systembridge-mcp` | Search local codebases for existing components and tokens before Phase 6 UI generation to prevent duplication. | Register via `npx` in `mcp_config.json`. |
 | **Deterministic Visual Audit** | `plumb-cli`, `onsystem`, `@usespectra/mcp` | Run deterministic pixel-perfect and token compliance audits against `DESIGN.md` in Phase 7 (`design-audit`). | Register via `npx` / CLI in `mcp_config.json`. |
 
+### 8. Security & Compliance
+| Category | Servers | Purpose | Typical Setup |
+| --- | --- | --- | --- |
+| **Threat Modeling** | `Aegis MCP` | Assess threat model completeness (`aegis_assess`) and verify code adherence (`aegis_review`) against `.agents/security-context.yaml` / `THREAT_MODEL.md` (`security-context-manager`). | Register `Aegis MCP` in `mcp_config.json` per upstream binary/package setup. |
+| **SAST** | `Semgrep MCP` | Static Application Security Testing (`semgrep_scan` / `scan_directory`) for OWASP Top 10 and CWE Top 25 flaws (`sast-scanner`). | Register `Semgrep MCP` via `uvx` / `npx` or Semgrep CLI per upstream docs. |
+| **SCA & Secrets** | `GoThreatScope`, `ironward`, `@infoinlet/mcp-codeaudit`, `GitHub MCP Server (Secret Scanning)` | Secret detection (Gitleaks integration) and SBOM/OSV.dev dependency vulnerability scanning (`sca-secret-scanner`). | Register via `npx` / Go binary / GitHub MCP config in `mcp_config.json`. |
+| **DAST** | `VibeShift`, `BreachKit` | Dynamic security probing on live running endpoints for auth bypass, IDOR, validation gaps, and CORS flaws (`dast-scanner`). | Register `VibeShift` or `BreachKit` in `mcp_config.json`. |
+| **Autonomous Fixing** | `security-mcp` | Autonomously patch verified SAST/SCA findings in the working tree and re-verify fixes (`security-gate`). | Register `security-mcp` in `mcp_config.json`. |
+| **Proving Findings** | `Sabba` | Prove exploitability and triage real security findings before Phase 8 sign-off (`security-gate`). | Register `Sabba` in `mcp_config.json` per upstream docs. |
+
 ### Bundled Audit MCP (Installed by `/init-project`)
 - `unslop` (`npx -y unslop-mcp@latest init`): Registers `.mcp.json` at the workspace root for the 72-rule Design Craft Engine used by `design-audit`.
 
