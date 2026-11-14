@@ -14,7 +14,7 @@ Developers who want to build applications with AI without losing control over st
 
 1. Use this repository as a GitHub template, or clone it into a new workspace.
 2. Run `/init-project`. It fetches the vendor repos and lists what is missing.
-3. Run `/full-cycle <idea>`.
+3. Run `/full-cycle <idea>` (step-by-step with gates) or `/auto-build <idea>` (autonomous).
 
 Manual equivalents of `/init-project`:
 
@@ -39,13 +39,18 @@ Hallmark can also be cloned manually into `.agents/vendor/hallmark/`. `unslop in
 
 ```
 .agents/
+  SOUL.md      Persistent Senior Engineer persona, Karpathy principles, anti-slop code signature
   rules/       Always-on and contextual rules (YAML frontmatter with a valid trigger is required)
   agents/      planner, architect, frontend, qa, devops
-  skills/      prd-generator, stack-advisor, design-system-generator, tech-spec-writer,
-               task-breakdown, ponytail-wrapper, design-audit, copy-audit
-  workflows/   init-project, plan-feature, full-cycle
+  platforms/   Conditional platform packs: web, desktop, mobile, plugin, cli
+  skills/      prd-generator, stack-advisor, mcp-discovery, design-system-applier,
+               design-system-generator, tech-spec-writer, database-architect,
+               task-breakdown, ponytail-wrapper, design-audit, copy-audit,
+               code-quality-gate, security-hardening
+  workflows/   init-project, plan-feature, full-cycle, auto-build
   vendor/      ponytail, hallmark, design-taste-frontend, unslop (fetched by /init-project)
 docs/
+  MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, mobile, security
   project/     PRD, STACK, DESIGN, ARCHITECTURE, DECISIONS (see the .example files)
   specs/       Per-feature specs, each under 250 lines
   tasks/       TASKS.md and audit or deploy reports
@@ -54,6 +59,12 @@ AGENTS.md      Always-on pointers for the agent
 ```
 
 Rules without valid frontmatter are silently discarded by Antigravity, and rule files are truncated at 24,000 bytes. Every rule here stays far below that.
+
+## V3: Omni-Platform & Soul-Driven
+
+- **AI Soul (`.agents/SOUL.md`):** Every coding task runs under a consistent Senior Engineer identity grounded in the Karpathy Guidelines (think before acting, simplicity first, surgical changes, goal-driven execution) and strict code hygiene (no nested ternaries, no silent `catch` blocks, descriptive names, and *why*-only comments).
+- **Multi-Platform Packs (`.agents/platforms/`):** The framework is not limited to web apps. When `stack-advisor` targets Mobile (React Native/Expo or Flutter), Desktop (Tauri v2 or Electron), CLI (Node.js or Go), Plugins (VS Code, Chrome, Figma), or Web (Next.js, Vite, SvelteKit, React), the agent loads the matching platform pack for IPC security, offline storage, 44px touch targets, exit codes, and platform-specific tests.
+- **MCP Stack & Quality Intelligence (`docs/MCP_REGISTRY.md` & `mcp-discovery`):** During Phase 2 and Phase 3, `mcp-discovery` recommends MCP servers tailored to your PRD and queries `techspace-mcp` when connected to evaluate Pareto-optimal stacks (falling back cleanly to `stack-advisor` when offline or unconfigured). Database and OWASP checks run via `database-architect` and `security-hardening`.
 
 ## 5. Integrated repos and honest trade-offs
 
@@ -92,6 +103,13 @@ Plan, Stack, Design, Spec, Task, Implement, Audit, Deliver, with a gate at every
 | Deliver | build and deployment report | user review |
 
 Typing 'continue', 'proceed', or 'lanjut' counts as approval of the current gate. To reject a spec and request changes, say so explicitly.
+
+### `/full-cycle` vs `/auto-build`
+
+| Mode | Command | Behavior | Trade-off |
+| --- | --- | --- | --- |
+| Gated (default) | `/full-cycle <idea>` | Stops at Gates 1 to 4 so you approve PRD, stack, design tokens, and specs step by step. | Saves tokens and keeps you in control at every phase. |
+| Autonomous | `/auto-build <idea>` | Runs end to end from idea to audited delivery without stopping at gates. Use `--review=prd,stack` to pause only at selected gates. | Consumes heavy tokens and requires user trust because decisions are made autonomously. |
 
 Audit has two tiers. The hard floor (WCAG AA contrast, focus state, `prefers-reduced-motion`, mobile overflow or truncated text) always fails the audit. Soft preferences may be overridden with a written brand justification in `DESIGN.md`.
 

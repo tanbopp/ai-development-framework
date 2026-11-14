@@ -9,9 +9,14 @@ description: Audits frontend output against a hard floor (must fail) and soft pr
 Before delivering frontend output.
 
 ## Process
-1. Hard-floor checks. Any violation fails the audit: WCAG AA contrast, focus state, `prefers-reduced-motion`, mobile overflow, truncated text.
-2. Soft-preference checks (Hallmark Reflex and Finish tiers, unslop rules). On violation, look in `DESIGN.md` for a written brand justification. If present, pass. If absent, request a fix.
-3. Produce a per-item report: pass/fail, tier (hard/soft), rationale, suggested fix.
+1. **Hard-floor checks.** Any violation fails the audit: WCAG AA contrast, focus state, `prefers-reduced-motion`, mobile overflow, truncated text.
+2. **Soft-preference checks** (Hallmark Reflex and Finish tiers, unslop rules). On violation, look in `docs/project/DESIGN.md` for a written brand justification. If present, pass. If absent, request a fix.
+3. **Screenshot capture.** Render the built page in a real browser and capture screenshots (using Playwright, Puppeteer, or `sloplint.mjs --render`).
+4. **Visual Regression Testing & Token Match.**
+   - If the user provided a reference image or URL in Phase 1 (or recorded one in `DESIGN.md`), compare the captured screenshot with the reference using an MCP visual regression tool (`vrt-mcp` or `zerovisual`).
+   - Verify that rendered colors, typography, and spacing match the approved tokens in `docs/project/DESIGN.md`.
+   - If visual mismatches exceed 5% or token colors do not match `DESIGN.md`, **REJECT** the implementation and send a concrete list of visual discrepancies to the Frontend Agent.
+5. Produce a per-item report: pass/fail, tier (hard/soft/visual-regression), rationale, suggested fix.
 
 Tools (audit only, never generate):
 - Hallmark: `node <sloplint-path> <path> --render` or `/hallmark audit <path>`. Hallmark's sloplint script may be at either path depending on how Hallmark was installed:
@@ -20,13 +25,16 @@ Tools (audit only, never generate):
 
   Use whichever exists. If neither exists, Hallmark is not installed -- report this and stop the audit.
 - unslop: `npx -y unslop-mcp audit . --json --no-fail`. If unavailable, perform the checks manually and say so in the report.
+- Visual regression: `vrt-mcp` or `zerovisual` MCP tools, paired with Playwright or Puppeteer screenshots.
 
 ## Output Contract
-An audit report. Reject on any hard-floor violation. Reject on soft preferences only when no justification exists.
+An audit report. Reject on any hard-floor violation, any visual regression diff above 5%, or any token mismatch against `DESIGN.md`. Reject on soft preferences only when no justification exists.
 
 ## Checklist
 - [ ] All five hard-floor checks run
 - [ ] Every soft failure checked against `DESIGN.md`
+- [ ] Screenshot captured and rendered tokens verified against `DESIGN.md`
+- [ ] Visual regression check run when a reference exists (diff <= 5%)
 - [ ] Report lists tier for each item
 
 ## Prohibitions

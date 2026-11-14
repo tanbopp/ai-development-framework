@@ -7,7 +7,9 @@ Prepares a fresh workspace. Safe to re-run: skip anything already present.
 ## Process
 Platform note. Antigravity agents run commands in the shell of the host OS: bash on macOS and Linux, PowerShell on Windows. Prefer the agent's built-in file and git tools over shell commands where possible, so the workflow works on any platform. When shell commands are necessary, use the platform-appropriate block from the examples below.
 
-1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, and `.agents/workflows/` exist and every rule has a valid `trigger` frontmatter.
+1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, `.agents/platforms/`, `.agents/workflows/`, `.agents/SOUL.md`, and `docs/MCP_REGISTRY.md` exist, and confirm every rule has a valid `trigger` frontmatter.
+   - Verify the five platform packs exist under `.agents/platforms/`: `web/SKILL.md`, `desktop/SKILL.md`, `mobile/SKILL.md`, `plugin/SKILL.md`, and `cli/SKILL.md`.
+   - Verify the V3 skills exist under `.agents/skills/`: `database-architect/SKILL.md`, `security-hardening/SKILL.md`, and `mcp-discovery/SKILL.md`.
 2. Prepare the vendor directories. The template ships each vendor folder with a `.gitkeep` placeholder. Before cloning, remove the placeholder:
 
    - Delete these four files if they exist: `.agents/vendor/ponytail/.gitkeep`, `.agents/vendor/design-taste-frontend/.gitkeep`, `.agents/vendor/hallmark/.gitkeep`, `.agents/vendor/unslop/.gitkeep`.
@@ -77,8 +79,11 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
 
 ## Readiness checklist
 - [ ] Rules present with valid frontmatter (5 files)
+- [ ] `.agents/SOUL.md` present
+- [ ] `.agents/platforms/` present (web, desktop, mobile, plugin, cli)
 - [ ] Agents present (planner, architect, frontend, qa, devops)
-- [ ] Skills present (8)
+- [ ] Skills present (13, including `database-architect`, `security-hardening`, `mcp-discovery`)
+- [ ] `docs/MCP_REGISTRY.md` present
 - [ ] `.agents/vendor/ponytail/` populated
 - [ ] `.agents/vendor/design-taste-frontend/` populated
 - [ ] Hallmark installed
