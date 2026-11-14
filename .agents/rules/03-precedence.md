@@ -6,7 +6,7 @@ trigger: always_on
 
 Tools and skills must not collide. Each has one lane.
 
-1. Design authority: `design-system-applier` is the primary design applier across any UI library or MCP token source, with `design-taste-frontend` as the bundled visual reference generator when no external library or reference is specified.
+1. Design authority: `design-system-integrator` is the primary design system integrator across Figma, existing codebases, brand/URL references, UI libraries, and MCP token sources, with `standby-design-mcp` or `design-taste-frontend` used when no design reference is specified.
 2. Design audit: Hallmark, unslop, and visual regression (`vrt-mcp` / `zerovisual`) audit only. They never generate new design.
 3. Copy audit: text only. Never CSS or components.
 4. Code minimalism: Ponytail applies only during implementation, never during design.

@@ -1,6 +1,8 @@
 ---
 name: stack-advisor
 description: Drafts 2-3 technology stack options from an approved PRD, with trade-offs, a recommendation tied to at least two REQ-XXX, and a list of deliberately rejected tools. Use when the Architect must choose a stack after PRD approval.
+version: 4.0.0
+status: active
 ---
 
 # Stack Advisor

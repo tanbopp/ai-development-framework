@@ -1,6 +1,8 @@
 ---
 name: tech-spec-writer
 description: Writes ARCHITECTURE.md and per-feature specs under docs/specs/, each referencing REQ-XXX and under 250 lines. Use after DESIGN.md is approved.
+version: 4.0.0
+status: active
 ---
 
 # Tech Spec Writer

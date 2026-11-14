@@ -10,11 +10,16 @@ A template of rules, agents, skills, and workflows. You supply one application i
 
 Developers who want to build applications with AI without losing control over stack, design, and quality.
 
+## Works with Any AI IDE
+
+Because this framework uses standard `.agents/` markdown, `AGENTS.md`, and `SKILL.md` formats, it works out-of-the-box with Antigravity, Cursor, Claude Code (CLI), and Codex. Any compliant agent reads `AGENTS.md` as its universal entry point and loads `.agents/skills/*/SKILL.md` on demand along with progressive-disclosure `references/` files.
+
 ## 3. How to install
 
 1. Use this repository as a GitHub template, or clone it into a new workspace.
 2. Run `/init-project`. It fetches the vendor repos and lists what is missing.
-3. Run `/full-cycle <idea>` (step-by-step with gates) or `/auto-build <idea>` (autonomous).
+3. Run `/onboard` to answer 3 quick questions and generate `.agents/PROJECT_BRIEF.md` (optional interactive setup before building).
+4. Run `/full-cycle <idea>` (step-by-step with gates) or `/auto-build <idea>` (autonomous). For large multi-feature projects, see `.agents/workflows/transactional-wave.md` for Git worktree parallelism.
 
 Manual equivalents of `/init-project`:
 
@@ -40,23 +45,25 @@ Hallmark can also be cloned manually into `.agents/vendor/hallmark/`. `unslop in
 ```
 .agents/
   SOUL.md      Persistent Senior Engineer persona, Karpathy principles, anti-slop code signature
+  MEMORY.md    Hot Memory (Layer 1) read at the start of every session
+  LESSONS.md   Append-only AI Lessons Learned log (poisoning-resistant memory)
   rules/       Always-on and contextual rules (YAML frontmatter with a valid trigger is required)
   agents/      planner, architect, frontend, qa, devops
   platforms/   Conditional platform packs: web, desktop, mobile, plugin, cli
-  skills/      prd-generator, stack-advisor, mcp-discovery, design-system-applier,
-               design-system-generator, tech-spec-writer, database-architect,
-               task-breakdown, ponytail-wrapper, design-audit, copy-audit,
-               code-quality-gate, security-hardening
-  workflows/   init-project, plan-feature, full-cycle, auto-build
+  skills/      23 versioned skills (v4.0.0), with progressive-disclosure references/ subfolders
+               (Layer 2 Warm Memory) loaded on-demand so SKILL.md stays under 500 lines
+  workflows/   init-project, onboard, plan-feature, full-cycle, auto-build, transactional-wave
   vendor/      ponytail, hallmark, design-taste-frontend, unslop (fetched by /init-project)
 docs/
-  MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, mobile, security
-  project/     PRD, STACK, DESIGN, ARCHITECTURE, DECISIONS (see the .example files)
+  MCP_REGISTRY.md   Recommended MCP servers for stack, design, visual QA, mobile, security, memory
+  project/     PREFLIGHT, PRD, STACK, DESIGN, ARCHITECTURE, DECISIONS (see the .example files)
   specs/       Per-feature specs, each under 250 lines
-  tasks/       TASKS.md and audit or deploy reports
+  tasks/       TASKS.md, verification logs (logs/*.log), and audit or deploy reports
 .github/workflows/pr-quality.yaml   Pull-request quality gate
-AGENTS.md      Always-on pointers for the agent
+AGENTS.md      Universal entry point for Antigravity, Cursor, Claude Code, and Codex
 ```
+
+Deep skill documentation (such as EARS templates, OWASP checklists, database SQL/RLS patterns, and detailed MCP design workflows) lives in `.agents/skills/<skill>/references/` so core `SKILL.md` files stay concise and under 500 lines while keeping deep reference guides available on-demand.
 
 Rules without valid frontmatter are silently discarded by Antigravity, and rule files are truncated at 24,000 bytes. Every rule here stays far below that.
 

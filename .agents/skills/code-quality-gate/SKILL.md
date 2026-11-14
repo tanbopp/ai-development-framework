@@ -1,6 +1,8 @@
 ---
 name: code-quality-gate
 description: Pre-commit and pre-delivery gate that scans newly generated or modified code for AI failure modes including stubbed functions, silent error handling, unvalidated inputs, and hardcoded secrets. Use before final delivery or git commit.
+version: 4.0.0
+status: active
 ---
 
 # Code Quality Gate

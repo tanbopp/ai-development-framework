@@ -1,6 +1,8 @@
 ---
 name: ponytail-wrapper
 description: Applies Ponytail, a structured YAGNI guardrail, to every implementation task with lite, full, or ultra intensity while preserving security guardrails. Use during implementation only, never during design.
+version: 4.0.0
+status: active
 ---
 
 # Ponytail Wrapper

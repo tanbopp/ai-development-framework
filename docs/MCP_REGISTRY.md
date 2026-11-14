@@ -39,7 +39,7 @@ npx -y <package-name> --help
 ### 2. Design & Tokens
 | Server | Purpose | Typical Setup |
 | --- | --- | --- |
-| `better-design` | Extracts design systems, color palettes, typography, and component tokens from reference systems in Phase 3 (`design-system-applier`). | Register via `npx` in `mcp_config.json`. |
+| `better-design` | Extracts design systems, color palettes, typography, and component tokens from reference systems in Phase 3 (`design-system-integrator`). | Register via `npx` in `mcp_config.json`. |
 | `designlang` | Queries and exports structured design tokens and language specifications for the chosen stack. | Register via `npx` in `mcp_config.json`. |
 | `inspo` | Discovers industry-aligned visual references when the PRD does not specify a UI library or brand aesthetic. | Register via `npx` in `mcp_config.json`. |
 
@@ -59,6 +59,20 @@ npx -y <package-name> --help
 | --- | --- | --- |
 | `semgrep-mcp` | Static security analysis (OWASP rules, injection sinks, secret patterns) to reinforce `security-hardening` in Phase 7. | Configure `semgrep-mcp` via `uvx` / `npx` or Semgrep CLI per upstream docs. |
 | `slopgate` | Automated anti-slop and code-quality gating to complement `code-quality-gate`. | Register via `npx` in `mcp_config.json`. |
+
+### 6. Memory & Context
+| Server | Purpose | Typical Setup |
+| --- | --- | --- |
+| `memory-seed` | Git-native memory retrieval across codebase history and past architectural context in Phases 1-2 (`mcp-discovery`). | Register `memory-seed` in `mcp_config.json` per upstream docs (for example via `npx`). |
+
+### 7. Design System & Visual Audit
+| Category | Servers | Purpose | Typical Setup |
+| --- | --- | --- | --- |
+| **Figma Integration** | `figma-console-mcp`, `design-context-bridge` | Extract DTCG tokens, typography, and component specs from Figma URLs in Phase 3 (`design-system-integrator`, Scenario A). | Register via `npx` / upstream binary in `mcp_config.json` with Figma credentials. |
+| **Token Extraction** | `@designmdcc/mcp`, `designlang` | Extract brand and URL design language and token specifications in Phase 3 (`design-system-integrator`, Scenario C). | Register via `npx` in `mcp_config.json`. |
+| **Zero-Design Generation** | `standby-design-mcp` | Generate production-ready design systems from scratch based on PRD industry and tone when no design reference exists (Scenario D). | Register via `npx` in `mcp_config.json`. |
+| **Component & Token Search** | `ds-pilot`, `brandrail`, `systembridge-mcp` | Search local codebases for existing components and tokens before Phase 6 UI generation to prevent duplication. | Register via `npx` in `mcp_config.json`. |
+| **Deterministic Visual Audit** | `plumb-cli`, `onsystem`, `@usespectra/mcp` | Run deterministic pixel-perfect and token compliance audits against `DESIGN.md` in Phase 7 (`design-audit`). | Register via `npx` / CLI in `mcp_config.json`. |
 
 ### Bundled Audit MCP (Installed by `/init-project`)
 - `unslop` (`npx -y unslop-mcp@latest init`): Registers `.mcp.json` at the workspace root for the 72-rule Design Craft Engine used by `design-audit`.

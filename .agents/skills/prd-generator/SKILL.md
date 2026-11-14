@@ -1,6 +1,8 @@
 ---
 name: prd-generator
-description: Produces a PRD from a raw idea, with unique REQ-XXX IDs, binary acceptance criteria, explicit out-of-scope, and a Non-Functional Requirements section. Use when the Planner needs to turn an idea into docs/project/PRD.md.
+description: Produces a PRD from a raw idea, with unique REQ-XXX IDs, EARS-formatted binary acceptance criteria, explicit out-of-scope, and a Non-Functional Requirements section. Use when the Planner needs to turn an idea into docs/project/PRD.md.
+version: 4.0.0
+status: active
 ---
 
 # PRD Generator
@@ -9,9 +11,10 @@ description: Produces a PRD from a raw idea, with unique REQ-XXX IDs, binary acc
 The Planner needs to produce a PRD from an idea.
 
 ## Process
-1. Read `AGENTS.md`, `.agents/rules/00-constitution.md`, and `.agents/rules/04-stack-selection-process.md`.
+1. Read `AGENTS.md`, `.agents/rules/00-constitution.md`, `.agents/rules/04-stack-selection-process.md`, and `.agents/skills/prd-generator/references/ears-syntax.md`.
 2. Extract Goal, Users, Out of Scope, Requirements, and Non-Functional Requirements (scale, realtime, offline, mobile, AI, integrations, budget, maintaining team) from the idea.
 3. For each requirement write: ID `REQ-XXX`, a verifiable statement, priority (must/should/could), rationale, and binary acceptance criteria.
+   - **Strict EARS Rule:** All Acceptance Criteria (AC) MUST be written using the EARS (Easy Approach to Requirements Syntax) format. Do not use vague language. See `.agents/skills/prd-generator/references/ears-syntax.md` for all five required templates.
 4. Write `docs/project/PRD.md`. Keep it under 250 lines. If longer, split per feature into `docs/specs/PRD-<feature>.md` and make `PRD.md` the index.
 5. Stop and request user approval (GATE 1).
 
@@ -20,6 +23,7 @@ The Planner needs to produce a PRD from an idea.
 
 ## Checklist
 - [ ] Every requirement has a unique ID and yes/no acceptance criteria
+- [ ] All Acceptance Criteria follow the EARS templates in `references/ears-syntax.md` with zero vague language
 - [ ] Out of Scope is non-empty
 - [ ] Non-Functional Requirements section is complete
 - [ ] Unknowns are listed under Open Questions, not assumed
@@ -27,5 +31,6 @@ The Planner needs to produce a PRD from an idea.
 
 ## Prohibitions
 - Guessing ambiguous requirements.
+- Writing vague or non-EARS Acceptance Criteria.
 - Skipping the Non-Functional Requirements section.
 

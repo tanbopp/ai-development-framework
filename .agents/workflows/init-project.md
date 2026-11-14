@@ -10,6 +10,11 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
 1. Verify `.agents/rules/`, `.agents/agents/`, `.agents/skills/`, `.agents/platforms/`, `.agents/workflows/`, `.agents/SOUL.md`, and `docs/MCP_REGISTRY.md` exist, and confirm every rule has a valid `trigger` frontmatter.
    - Verify the five platform packs exist under `.agents/platforms/`: `web/SKILL.md`, `desktop/SKILL.md`, `mobile/SKILL.md`, `plugin/SKILL.md`, and `cli/SKILL.md`.
    - Verify the V3 skills exist under `.agents/skills/`: `database-architect/SKILL.md`, `security-hardening/SKILL.md`, and `mcp-discovery/SKILL.md`.
+   - Verify the V4 safety-net skills exist under `.agents/skills/`: `environment-preflight/SKILL.md`, `boundary-guard/SKILL.md`, `snapshot-rollback/SKILL.md`, and `human-in-the-loop/SKILL.md`.
+   - Verify the V4 brain/memory files exist: `.agents/MEMORY.md`, `.agents/LESSONS.md`, `.agents/skills/lessons-learned/SKILL.md`, and `.agents/skills/context-grounding/SKILL.md`.
+   - Verify the V4 Phase 3 engine files exist: `.agents/skills/prd-generator/references/ears-syntax.md`, `.agents/skills/evidence-gated-blocking/SKILL.md`, `.agents/skills/test-suite-auditor/SKILL.md`, `.agents/skills/meta-judge/SKILL.md`, and `.agents/skills/cost-estimator/SKILL.md`.
+   - Verify the V4 Phase 4 design integration upgrade exists: `.agents/skills/design-system-integrator/SKILL.md` and `docs/MCP_REGISTRY.md` includes the `Design System & Visual Audit` and `Memory & Context` sections.
+   - Verify the V4 Phase 5 foundation files exist: `.agents/workflows/onboard.md` (`/onboard`), `.agents/workflows/transactional-wave.md`, `version: 4.0.0` and `status: active` in skill frontmatter, and progressive-disclosure `references/` docs (`security-hardening/references/owasp-checklist.md`, `database-architect/references/db-patterns.md`, `design-system-integrator/references/mcp-design-tools.md`).
 2. Prepare the vendor directories. The template ships each vendor folder with a `.gitkeep` placeholder. Before cloning, remove the placeholder:
 
    - Delete these four files if they exist: `.agents/vendor/ponytail/.gitkeep`, `.agents/vendor/design-taste-frontend/.gitkeep`, `.agents/vendor/hallmark/.gitkeep`, `.agents/vendor/unslop/.gitkeep`.
@@ -80,10 +85,13 @@ Platform note. Antigravity agents run commands in the shell of the host OS: bash
 ## Readiness checklist
 - [ ] Rules present with valid frontmatter (5 files)
 - [ ] `.agents/SOUL.md` present
+- [ ] `.agents/MEMORY.md` and `.agents/LESSONS.md` present
 - [ ] `.agents/platforms/` present (web, desktop, mobile, plugin, cli)
 - [ ] Agents present (planner, architect, frontend, qa, devops)
-- [ ] Skills present (13, including `database-architect`, `security-hardening`, `mcp-discovery`)
-- [ ] `docs/MCP_REGISTRY.md` present
+- [ ] `.agents/workflows/onboard.md` (`/onboard`) and `.agents/workflows/transactional-wave.md` present
+- [ ] Progressive-disclosure `references/` files present (`ears-syntax.md`, `owasp-checklist.md`, `db-patterns.md`, `mcp-design-tools.md`)
+- [ ] Skills present (23, all with `version: 4.0.0` and `status: active`, including `design-system-integrator`, `database-architect`, `security-hardening`, `mcp-discovery`, `environment-preflight`, `boundary-guard`, `snapshot-rollback`, `human-in-the-loop`, `lessons-learned`, `context-grounding`, `evidence-gated-blocking`, `test-suite-auditor`, `meta-judge`, `cost-estimator`)
+- [ ] `docs/MCP_REGISTRY.md` present with expanded MCP categories (`Memory & Context`, `Design System & Visual Audit`: Figma, token extraction, zero-design, component search, deterministic visual audit)
 - [ ] `.agents/vendor/ponytail/` populated
 - [ ] `.agents/vendor/design-taste-frontend/` populated
 - [ ] Hallmark installed

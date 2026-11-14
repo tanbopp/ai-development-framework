@@ -1,6 +1,8 @@
 ---
 name: design-system-generator
 description: Generates a per-project design system (tokens, typography, spacing, motion) from the PRD tone and approved stack, exported in the stack's format. Use after STACK.md is approved. design-taste-frontend is the only design generator.
+version: 4.0.0
+status: active
 ---
 
 # Design System Generator

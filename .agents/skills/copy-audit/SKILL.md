@@ -1,6 +1,8 @@
 ---
 name: copy-audit
 description: Audits text output (landing pages, microcopy, documentation) for AI-writing tells such as negative parallelism, throat-clearing openers, em-dash overuse, and filler vocabulary. Text only, never CSS or components. Use before delivering any output containing text.
+version: 4.0.0
+status: active
 ---
 
 # Copy Audit
